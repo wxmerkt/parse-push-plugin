@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="com.phonegap.parsepushplugin" version="0.6.3">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" id="com.phonegap.parsepushplugin" version="0.6.5">
     <name>ParsePushPlugin</name>
-    <description>Phonegap plugin for Parse.com push notification</description>
+    <description>Cordova/Phonegap plugin for Parse push notifications</description>
 
     <js-module src="www/parse-push-plugin.js" name="ParsePushPlugin">
         <clobbers target="ParsePushPlugin" />
@@ -43,11 +43,10 @@
           <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
         </config-file>
 
-        <source-file src="src/android/parse/Parse-1.10.1.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/parse/Parse-1.10.3.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/parse/bolts-android-1.2.1.jar" target-dir="libs" framework="true" />
-		<source-file src="src/android/parse/android-support-v4.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/ParsePushPlugin.java" target-dir="src/com/phonegap/parsepushplugin" />
-        <source-file src="src/android/ParsePushPluginReceiver.java" target-dir="src/com/phonegap/parsepushplugin" />      
+        <source-file src="src/android/ParsePushPluginReceiver.java" target-dir="src/com/phonegap/parsepushplugin" />
      </platform>
 
     <platform name="ios">
@@ -59,18 +58,18 @@
         <header-file src="src/ios/CDVParsePlugin.h" />
         <source-file src="src/ios/CDVParsePlugin.m" />
 
-        <!--<framework src="AssetsLibrary.framework" />-->
-        <!--<framework src="MobileCoreServices.framework" />-->
         <framework src="AudioToolbox.framework" />
         <framework src="CFNetwork.framework" />
         <framework src="CoreGraphics.framework" />
         <framework src="CoreLocation.framework" />
-        <framework src="libz.1.1.3.dylib" />
+        <framework src="libz.tbd" />
+        <framework src="libsqlite3.tbd" />
         <framework src="MobileCoreServices.framework" />
         <framework src="QuartzCore.framework" />
         <framework src="Security.framework" />
         <framework src="StoreKit.framework" />
         <framework src="SystemConfiguration.framework" />
         <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
+        <framework src="src/ios/Frameworks/Bolts.framework" custom="true" />
     </platform>
 </plugin>
