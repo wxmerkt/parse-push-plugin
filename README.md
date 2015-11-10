@@ -89,14 +89,14 @@ ParsePushPlugin.on('openPN', function(pn){
 For Android, Parse SDK v1.10.1 is used. This means GCM support. No more background process `PushService` tapping
 device battery to duplicate what GCM already provides.
 
-_I've only worked on the Android support for this fork. The iOS side is not yet up to date._
+_I've only worked on the Android support for this fork. The iOS framework has been updated, but needs to be tested_
 
 
 Installation
 ------------
 
 ```
-cordova plugin add https://github.com/taivo/parse-push-plugin
+cordova plugin add https://github.com/mussegam/parse-push-plugin
 ```
 
 
