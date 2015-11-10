@@ -2,6 +2,7 @@ package com.phonegap.parsepushplugin;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.lang.Exception;
 
 import org.apache.cordova.CallbackContext;
@@ -15,12 +16,14 @@ import org.json.JSONException;
 import com.parse.Parse;
 import com.parse.ParsePush;
 import com.parse.ParseInstallation;
+import com.parse.ParseException;
 
 import android.util.Log;
 
 public class ParsePushPlugin extends CordovaPlugin {
     public static final String ACTION_GET_INSTALLATION_ID = "getInstallationId";
     public static final String ACTION_GET_INSTALLATION_OBJECT_ID = "getInstallationObjectId";
+    public static final String ACTION_UPDATE_INSTALLATION_OBJECT = "updateInstallationObject";
     public static final String ACTION_GET_SUBSCRIPTIONS = "getSubscriptions";
     public static final String ACTION_SUBSCRIBE = "subscribe";
     public static final String ACTION_UNSUBSCRIBE = "unsubscribe";
@@ -35,29 +38,31 @@ public class ParsePushPlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-    	if (action.equals(ACTION_REGISTER_CALLBACK)){
-    		gEventCallback = callbackContext;
-    		return true;
-    	}
-
-        if (action.equals(ACTION_GET_INSTALLATION_ID)) {
+      	if (action.equals(ACTION_REGISTER_CALLBACK)){
+      		gEventCallback = callbackContext;
+      		return true;
+      	}
+        else if (action.equals(ACTION_GET_INSTALLATION_ID)) {
             this.getInstallationId(callbackContext);
             return true;
         }
-
-        if (action.equals(ACTION_GET_INSTALLATION_OBJECT_ID)) {
+        else if (action.equals(ACTION_GET_INSTALLATION_OBJECT_ID)) {
             this.getInstallationObjectId(callbackContext);
             return true;
         }
-        if (action.equals(ACTION_GET_SUBSCRIPTIONS)) {
+        else if (action.equals(ACTION_UPDATE_INSTALLATION_OBJECT)) {
+          this.updateInstallationObject(args.getJSONObject(0), callbackContext);
+          return true;
+        }
+        else if (action.equals(ACTION_GET_SUBSCRIPTIONS)) {
             this.getSubscriptions(callbackContext);
             return true;
         }
-        if (action.equals(ACTION_SUBSCRIBE)) {
+        else if (action.equals(ACTION_SUBSCRIBE)) {
             this.subscribe(args.getString(0), callbackContext);
             return true;
         }
-        if (action.equals(ACTION_UNSUBSCRIBE)) {
+        else if (action.equals(ACTION_UNSUBSCRIBE)) {
             this.unsubscribe(args.getString(0), callbackContext);
             return true;
         }
@@ -81,6 +86,34 @@ public class ParsePushPlugin extends CordovaPlugin {
                 callbackContext.success(objectId);
             }
         });
+    }
+
+    private void updateInstallationObject(final JSONObject args, final CallbackContext callbackContext) {
+      cordova.getThreadPool().execute(new Runnable() {
+        public void run() {
+          ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+          Iterator<?> keys = args.keys();
+          while (keys.hasNext()) {
+            String key = (String)keys.next();
+            String value;
+            try {
+              value = (String)args.getString(key);
+            }
+            catch (JSONException exc) {
+               value = "";
+            }
+            installation.put(key, value);
+          }
+
+          try {
+            installation.save();
+            callbackContext.success();
+          }
+          catch (ParseException exc) {
+            callbackContext.error(exc.getMessage());
+          }
+        }
+      });
     }
 
     private void getSubscriptions(final CallbackContext callbackContext) {
