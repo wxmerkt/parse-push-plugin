@@ -48,7 +48,7 @@ var ParsePushPlugin = {
     },
 
 		updateInstallationObject: function(values, successCb, errorCb) {
-			cordova.exec(successCb, errorCb, serviceName, 'updateInstallationObject', values);
+			cordova.exec(successCb, errorCb, serviceName, 'updateInstallationObject', [values]);
 		},
 
     getSubscriptions: function(successCb, errorCb) {
