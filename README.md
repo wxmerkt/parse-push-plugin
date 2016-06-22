@@ -7,8 +7,8 @@ Phonegap 3.x plugin for Parse.com push service.
 makes it fairly useless for PN in Phonegap/Cordova. This plugin bridges the gap by leveraging native Parse.com SDKs
 to register/receive PNs and allow a few essential methods to be accessible from Javascript.
 
-* Phonegap/Cordova > 3.0.0. 
-* Android Parse SDK v1.10.1 with or without GCM. 
+* Phonegap/Cordova > 3.0.0.
+* Android Parse SDK v1.10.1 with or without GCM.
 * iOS Parse SDK v1.11.0
 
 How Is This Fork Different?
@@ -23,7 +23,7 @@ This plugin can handle cold start. It uses the following JS API to give access t
 * **subscribe**( channel, successCB, errorCB )
 * **unsubscribe**( channel, successCB, errorCB )
 
-ParsePushPlugin makes these notification events available: `openPN, receivePN, receivePN:customEvt`. 
+ParsePushPlugin makes these notification events available: `openPN, receivePN, receivePN:customEvt`.
 To handle notification events in JS, do this:
 
 ```javascript
@@ -75,7 +75,7 @@ ParsePushPlugin.on('openPN', function(pn){
 });
 ```
 
-Android: If `urlHash` starts with "#" or "?", this plugin will pass it along as an extra in the 
+Android: If `urlHash` starts with "#" or "?", this plugin will pass it along as an extra in the
 android intent to launch your MainActivity. For the cold start case, you can change your initial url
 in  `MainActivity.onCreate()`:
 
@@ -170,7 +170,7 @@ connection that will handle PNs without GCM. Follow these steps for `ParseBroadc
 
 ####iOS Setup:
 
-1. Create your SSL push certificates with Apple and configure them in your Parse.com app. 
+1. Create your SSL push certificates with Apple and configure them in your Parse.com app.
 There is a tutorial [here](https://github.com/ParsePlatform/PushTutorial/tree/master/iOS) that you may find useful. All the steps
 prior to adding code to your iOS application are applicable.
 
@@ -185,11 +185,11 @@ for you already so search for it first.
 	//
 	// Stuff already defined by Cordova
 	//
-    
+
     //
     // Initialize Parse
     [Parse setApplicationId:@"YOUR_PARSE_APPID" clientKey:@"YOUR_PARSE_CLIENT_KEY"];
-    
+
     //
     // Basic notification config, left as cut-and-paste instead of part of plugin code for easy customization
     UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
@@ -197,7 +197,7 @@ for you already so search for it first.
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
 
-    return YES;
+    return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
 ```
 
@@ -207,7 +207,7 @@ for you already so search for it first.
 Usage
 -----
 
-When your app starts, ParsePushPlugin automatically obtains and stores necessary device tokens to your native `ParseInstallation`. 
+When your app starts, ParsePushPlugin automatically obtains and stores necessary device tokens to your native `ParseInstallation`.
 This plugin also registers a javascript callback that will be triggered when a push notification is received or opened on the native side.
 This setup enables the following simple API and event handling.
 
