@@ -4,7 +4,7 @@
     <name>ParsePushPlugin</name>
     <description>Phonegap plugin for Parse.com push notification</description>
 	<keywords>cordova,phonegap,parse.com,parse push, push notification</keywords>
-	
+
     <js-module src="www/parse-push-plugin.js" name="ParsePushPlugin">
         <clobbers target="ParsePushPlugin" />
     </js-module>
@@ -44,11 +44,14 @@
           <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
         </config-file>
 
-        <source-file src="src/android/parse/Parse-1.10.1.jar" target-dir="libs" framework="true" />
-        <source-file src="src/android/parse/bolts-android-1.2.1.jar" target-dir="libs" framework="true" />
-		<source-file src="src/android/parse/android-support-v4.jar" target-dir="libs" framework="true" />
+
+
+       <framework src="com.parse:parse-android:1.13.0" />
+       <framework src="com.parse.bolts:bolts-android:1.4.0" />
+       <framework src="com.android.support:support-v4:+" />
+
         <source-file src="src/android/ParsePushPlugin.java" target-dir="src/com/phonegap/parsepushplugin" />
-        <source-file src="src/android/ParsePushPluginReceiver.java" target-dir="src/com/phonegap/parsepushplugin" />      
+        <source-file src="src/android/ParsePushPluginReceiver.java" target-dir="src/com/phonegap/parsepushplugin" />
      </platform>
 
     <platform name="ios">
@@ -60,7 +63,7 @@
         </config-file>
         <header-file src="src/ios/ParsePushPlugin.h" />
         <source-file src="src/ios/ParsePushPlugin.m" />
-        
+
         <header-file src="src/ios/AppDelegate+parsepush.h" />
         <source-file src="src/ios/AppDelegate+parsepush.m" />
 
